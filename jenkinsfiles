@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Build') {
+            steps {
+                dir('C:\\Users\\kiruthikha\\OneDrive\\Desktop\\MavenProjects\\studentapp') {
+                    bat 'mvn clean compile'
+                }
+            }
+        }
+
+        stage('Run App') {
+            steps {
+                dir('C:\\Users\\kiruthikha\\OneDrive\\Desktop\\MavenProjects\\studentapp') {
+                    bat 'start cmd /c mvn exec:java -Dexec.mainClass=com.example.TempServer'
+                }
+            }
+        }
+
+    }
+}
