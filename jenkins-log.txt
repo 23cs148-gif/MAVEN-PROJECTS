@@ -1,0 +1,2 @@
+
+C:\Users\kiruthikha\OneDrive\Desktop\MavenProjects\studentapp>start cmd /c mvn exec:java -Dexec.mainClass=com.example.TempServer 
