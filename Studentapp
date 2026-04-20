@@ -1,1 +1,50 @@
+package com.example;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
 
+public class TempServer {
+
+    public static void main(String[] args) throws Exception {
+
+       HttpServer server = HttpServer.create(new InetSocketAddress(8085), 0);
+
+        server.createContext("/", new MyHandler());
+
+        server.setExecutor(null);
+        server.start();
+
+        System.out.println("Server started at http://localhost:8085");
+    }
+
+    static class MyHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange t) {
+
+            String response =
+                    "<html>" +
+                    "<head>" +
+                    "<style>" +
+                    "body { background-color: lightblue; text-align: center; font-family: Arial; }" +
+                    "h1 { color: darkblue; }" +
+                    "</style>" +
+                    "</head>" +
+                    "<body>" +
+                    "<h1>Temperature Converter</h1>" +
+                    "<p>Server created successfully!</p>" +
+                    "</body>" +
+                    "</html>";
+
+            try {
+                t.sendResponseHeaders(200, response.length());
+                OutputStream os = t.getResponseBody();
+                os.write(response.getBytes());
+                os.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
